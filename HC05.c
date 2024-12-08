@@ -208,14 +208,14 @@ void ATsend( const char* inputString){
 =======================================================================
 ==========          HC05 configuration                 ==========*/
 
-void HC05config(uint32_t mode){
+void HC05config_slave(uint32_t mode){
 
 	  ATsend("AT\r\n"); //  ATsend("AT\r\n"); check if hc05 is in AT mode. TODOpart1
 		if(SearchFound == 0) {
 			printf("Can't enter AT mode"); while(1){};
 			}
 		
-			ATsend("AT+NAME=HC-05-LYTLE\r\n");  // ATsend("AT+NAME=????\r\n"); set a name. TODOpart1
+			ATsend("AT+NAME=HC-05-SLAVE\r\n");  // ATsend("AT+NAME=????\r\n"); set a name. TODOpart1
 			if(SearchFound == 0) {
 					printf("Can't rename slave module"); while(1){};
 			}
@@ -224,12 +224,16 @@ void HC05config(uint32_t mode){
 					printf("Can't change password of slave module"); while(1){};
 			}
 			ATsend("AT+UART=9600,0,0\r\n"); // ATsend("AT+UART=9600, 0,0\r\n"); set a uart rate to9600. TODOpart1  
-		if(SearchFound == 0) {
+			if(SearchFound == 0) {
 				printf("Can't set uart baud rate"); while(1){};
 			}
-		ATsend("AT+ROLE=0\r\n"); //	ATsend("AT+ROLE=0\r\n");set to slave mode. TODOpart1 
-		if(SearchFound == 0) {
+			ATsend("AT+ROLE=0\r\n"); //	ATsend("AT+ROLE=0\r\n");set to slave mode. TODOpart1 
+			if(SearchFound == 0) {
 				printf("Can't enter set Slave mode"); while(1){};
+			}
+			ATsend("AT+INQM=1,9,48\r\n"); //	configure inquiry mode
+			if(SearchFound == 0) {
+				printf("Can't set inquiry mode"); while(1){};
 			}
 
 			ATsend("AT+ROLE?\r\n");
@@ -251,6 +255,57 @@ void HC05config(uint32_t mode){
 
   }
 	
+	void HC05config_master(uint32_t mode){
+
+	  ATsend("AT\r\n"); //  ATsend("AT\r\n"); check if hc05 is in AT mode. TODOpart1
+		if(SearchFound == 0) {
+			printf("Can't enter AT mode"); while(1){};
+			}
+		
+			ATsend("AT+NAME=HC-05-MASTER\r\n");  // ATsend("AT+NAME=????\r\n"); set a name. TODOpart1
+			if(SearchFound == 0) {
+					printf("Can't rename slave module"); while(1){};
+			}
+			ATsend("AT+PSWD=4321\r\n");// ATsend("AT+PSWD=???\r\n");    set a pasword. TODOpart1
+			if(SearchFound == 0) {
+					printf("Can't change password of slave module"); while(1){};
+			}
+			ATsend("AT+UART=9600,0,0\r\n"); // ATsend("AT+UART=9600, 0,0\r\n"); set a uart rate to9600. TODOpart1  
+			if(SearchFound == 0) {
+				printf("Can't set uart baud rate"); while(1){};
+			}
+			ATsend("AT+ROLE=1\r\n"); //	ATsend("AT+ROLE=0\r\n");set to slave mode. TODOpart1 
+			if(SearchFound == 0) {
+				printf("Can't enter set Slave mode"); while(1){};
+			}
+			ATsend("AT+INQM=1,9,48\r\n"); //	configure inquiry mode
+			if(SearchFound == 0) {
+				printf("Can't set inquiry mode"); while(1){};
+			}
+
+			ATsend("AT+INQ\r\n"); //	inquiry (check for devices)
+			if(SearchFound == 0) {
+				printf("Can't inquiry devices"); while(1){};
+			}
+
+			ATsend("AT+ROLE?\r\n");
+			if(SearchFound == 0) {
+					printf("Can't get module role"); while(1){};
+			}
+			ATsend("AT+NAME?\r\n");
+			if(SearchFound == 0) {
+					printf("Can't get module name"); while(1){};
+			}
+			ATsend("AT+PSWD?\r\n");
+			if(SearchFound == 0) {
+					printf("Can't rename slave module"); while(1){};
+			}
+						ATsend("AT+UART?\r\n");
+			if(SearchFound == 0) {
+					printf("UART mode"); while(1){};
+			}
+
+  }
 
 
 void HC05_Init(uint32_t baud){

@@ -24,6 +24,21 @@
 #include "fixed.h"
 #include "tm4c123gh6pm.h"
 #include "ADCCode.h"
+#include "UART.h"
+#include "Bluetooth.h"
+#include "LED.h"
+
+// prototypes for functions defined in startup.s
+void DisableInterrupts(void); // Disable interrupts
+void EnableInterrupts(void);  // Enable interrupts
+long StartCritical (void);    // previous I bit, disable interrupts
+void EndCritical(long sr);    // restore I bit to previous value
+void WaitForInterrupt(void);  // low power mode
+void DelayMs(uint32_t n);
+void HC05_PrintChar(char iput);
+void HC05config_slave(uint32_t mod);//, char *slaveaddress);
+void HC05config_master(uint32_t mod);//, char *slaveaddress);
+char Bluetooth_Read(void);
 
 void DelayWait10ms(uint32_t n);
 void PortF_Init(void);
@@ -109,52 +124,76 @@ void ConvertDistancetostring(unsigned long n);
 void SysTick_Init_Interrupts(unsigned long period);
 void SysTick_Handler(void);
 
-int main(void){uint32_t i;
-  PLL_Init(Bus80MHz); 
-	ADC0_InitSWTriggerSeq3_Ch1();					// ADC initialization PE2/AIN1
-	SysTick_Init_Interrupts(25000000);			// Pass the proper value such that we get Interrupt at every 500ms
-  PortF_Init();
-  ST7735_InitR(INITR_REDTAB);
-	int reading = 0;
-  while(1){
+//int main(void){uint32_t i;
+//  PLL_Init(Bus80MHz); 
+//	ADC0_InitSWTriggerSeq3_Ch1();					// ADC initialization PE2/AIN1
+//	SysTick_Init_Interrupts(25000000);			// Pass the proper value such that we get Interrupt at every 500ms
+//  PortF_Init();
+//  ST7735_InitR(INITR_REDTAB);
+//	int reading = 0;
+//  while(1){
 
-			
-		// is "Flag" set?
-		// If yes then disable Flag and Print the Value using UART_printf
-		while (Flag == 0){ } // wait
+//			
+//		// is "Flag" set?
+//		// If yes then disable Flag and Print the Value using UART_printf
+//		while (Flag == 0){ } // wait
 
-    ST7735_FillScreen(0);  // set screen to black
-    ST7735_SetCursor(0,0);
-		
-    printf("ADC Value\r");
-    printf("%s\r", String);
-		
-		if (Bar < 50) {
-			ST7735_FillRect(52, 150 - Bar, 24, Bar, ST7735_RED);
-		} else if (Bar < 90) {
-			ST7735_FillRect(52, 150 - Bar, 24, Bar, ST7735_YELLOW);
-		} else {
-			ST7735_FillRect(52, 150 - Bar, 24, Bar, ST7735_GREEN);
-		}
+//    ST7735_FillScreen(0);  // set screen to black
+//    ST7735_SetCursor(0,0);
+//		
+//    printf("ADC Value\r");
+//    printf("%s\r", String);
+//		
+//		if (Bar < 50) {
+//			ST7735_FillRect(52, 150 - Bar, 24, Bar, ST7735_RED);
+//		} else if (Bar < 90) {
+//			ST7735_FillRect(52, 150 - Bar, 24, Bar, ST7735_YELLOW);
+//		} else {
+//			ST7735_FillRect(52, 150 - Bar, 24, Bar, ST7735_GREEN);
+//		}
 
-		DelayWait10ms(100);
-		Flag = 0;	
+//		DelayWait10ms(100);
+//		Flag = 0;	
 
-		reading++;
-		
-		
- 
+//		reading++;
+//		
+//		
+// 
 
 
-//    ST7735_XYplotInit("Circle",-2500, 2500, -2500, 2500);
-//    ST7735_XYplot(180,(int32_t *)CircleXbuf,(int32_t *)CircleYbuf);
-//    Pause();
-//    
-//    ST7735_XYplotInit("Star- upper right",-450, 150, -400, 200);
-//    ST7735_XYplot(50,(int32_t *)StarXbuf,(int32_t *)StarYbuf);
-//    Pause(); 
-  } 
-} 
+////    ST7735_XYplotInit("Circle",-2500, 2500, -2500, 2500);
+////    ST7735_XYplot(180,(int32_t *)CircleXbuf,(int32_t *)CircleYbuf);
+////    Pause();
+////    
+////    ST7735_XYplotInit("Star- upper right",-450, 150, -400, 200);
+////    ST7735_XYplot(50,(int32_t *)StarXbuf,(int32_t *)StarYbuf);
+////    Pause(); 
+//  } 
+//} 
+
+
+int main(void ) {
+	
+	DisableInterrupts();
+  PLL_Init(Bus80MHz);
+  Output_Init();       // UART0 only used for debugging
+  printf("\n\r-----------\n\rSlave...\n\r");
+	HC05_Init(38400);
+	//bluetooth
+	{ 
+		printf("disconnect HC05 Vcc pin, connect it again, and press SW1/SW2 to enter AT mode \r\n");//"press HC-05 button while powering up to enter AT mode \r\n");
+		GPIO_PORTB_DATA_R |= 0x20; // EN high
+		while(Board_Input()==0){};
+		HC05config_slave(0);//, slaveaddress);
+		//HC05config_master(0);
+		printf("HC05 is configured. Disconnect HC05 Vcc pin, connect it again to exit AT mode, if not paired pair it with computer and then press SW1/SW2  \r\n");
+		GPIO_PORTB_DATA_R &= ~0x20; // EN low
+		DelayMs(150);
+		while(Board_Input()==0){};
+	}
+	
+	return 0;
+}
 
 // PF4 is input
 // Make PF2 an output, enable digital I/O, ensure alt. functions off
