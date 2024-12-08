@@ -25,7 +25,8 @@
 // the PLL to the desired frequency.
 // SYSDIV = 400/freq -1
 // bus frequency is 400MMHz/(SYSDIV+1)
-
+#ifndef PLL_H
+#define PLL_H
 // configure the system to get its clock from the PLL
 void PLL_Init(uint32_t freq);
 #define Bus80MHz     4
@@ -161,6 +162,6 @@ void PLL_Init(uint32_t freq);
 #define Bus3_150MHz 126
 #define Bus3_125MHz 127
 
-
+#endif
 
 

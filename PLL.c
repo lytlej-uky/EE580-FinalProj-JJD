@@ -20,9 +20,8 @@
  For more information about my classes, my research, and my books, see
  http://users.ece.utexas.edu/~valvano/
  */
- 
+
 #include <stdint.h>
-#include "PLL.h"
 #include "tm4c123gh6pm.h"
 
 // The #define statement SYSDIV2 in PLL.h

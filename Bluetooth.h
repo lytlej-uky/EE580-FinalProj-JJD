@@ -11,8 +11,6 @@ void HC05program(uint32_t mod ,char *slaveaddress);
 // Outputs: none
 void HC05_Init(uint32_t baud);
 
-void HC05_Init(uint32_t baud);
-
 //------------------- HC05_InitUART-------------------
 // intializes uart and gpio needed to communicate with HC05
 // Configure UART1 for serial full duplex operation
