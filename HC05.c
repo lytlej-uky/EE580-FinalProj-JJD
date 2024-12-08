@@ -215,22 +215,43 @@ void HC05config(uint32_t mode){
 			printf("Can't enter AT mode"); while(1){};
 			}
 		
-			ATsend("AT+NAME=HC-05drew\r\n");  // ATsend("AT+NAME=????\r\n"); set a name. TODOpart1
+			ATsend("AT+NAME=HC-05-MASTER\r\n");  // ATsend("AT+NAME=????\r\n"); set a name. TODOpart1
 			if(SearchFound == 0) {
 					printf("Can't rename slave module"); while(1){};
 			}
-			ATsend("AT+PSWD=121314\r\n");// ATsend("AT+PSWD=???\r\n");    set a pasword. TODOpart1
+			ATsend("AT+PSWD=4321\r\n");// ATsend("AT+PSWD=???\r\n");    set a pasword. TODOpart1
 			if(SearchFound == 0) {
 					printf("Can't change password of slave module"); while(1){};
 			}
 			ATsend("AT+UART=9600,0,0\r\n"); // ATsend("AT+UART=9600,0,0\r\n"); set a uart rate to9600. TODOpart1  
-		if(SearchFound == 0) {
+			if(SearchFound == 0) {
 				printf("Can't set uart baud rate"); while(1){};
 			}
-		ATsend("AT+ROLE=0\r\n"); //	ATsend("AT+ROLE=0\r\n");set to slave mode. TODOpart1 
-		if(SearchFound == 0) {
-				printf("Can't enter set Slave mode"); while(1){};
+			ATsend("AT+ROLE=1\r\n"); //	ATsend("AT+ROLE=1\r\n");set to master mode. TODOpart1 
+			if(SearchFound == 0) {
+				printf("Can't enter set Master mode"); while(1){};
 			}
+			ATsend("AT+INIT\r\n");
+			if (SearchFound == 0) {
+					printf("Can't initialize module"); while(1){}
+			}
+			ATsend("AT+IAC=9e8b33\r\n");
+			if (SearchFound == 0) {
+					printf("Failed to reset module");
+			}
+			ATsend("AT+CLASS=0\r\n");
+			if (SearchFound == 0) {
+					printf("Failed to reset module");
+			}
+			ATsend("AT+INQM=1,9,48\r\n"); //	configure inquiry mode
+			if(SearchFound == 0) {
+				printf("Can't set Inquiry mode"); while(1){};
+			}
+			ATsend("AT+INQ\r\n"); // inquire
+			if(SearchFound == 0) {
+				printf("Can't inquiry devices"); while(1){};
+			}
+			
 
 			ATsend("AT+ROLE?\r\n");
 			if(SearchFound == 0) {
@@ -244,11 +265,11 @@ void HC05config(uint32_t mode){
 			if(SearchFound == 0) {
 					printf("Can't rename slave module"); while(1){};
 			}
-						ATsend("AT+UART?\r\n");
+			ATsend("AT+UART?\r\n");
 			if(SearchFound == 0) {
 					printf("UART mode"); while(1){};
 			}
-
+			
   }
 	
 
