@@ -366,8 +366,8 @@ char character;
 // 8 bit word length, no parity bits, one stop bit, FIFOs enabled
 // Input: none
 // Output: none
-//void Output_Init(void){
-//  UART_Init();
-//}
+void Output_Init_UART(void){
+  UART_Init();
+}
 
 

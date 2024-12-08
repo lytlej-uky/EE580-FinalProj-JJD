@@ -176,7 +176,7 @@ int main(void ) {
 	
 	DisableInterrupts();
   PLL_Init(Bus80MHz);
-  Output_Init();       // UART0 only used for debugging
+  Output_Init_UART();       // UART0 only used for debugging
   printf("\n\r-----------\n\rSlave...\n\r");
 	HC05_Init(38400);
 	//bluetooth
