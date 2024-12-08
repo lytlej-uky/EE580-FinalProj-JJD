@@ -19,9 +19,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include "string.h"
-#include "ST7735.h"
 #include "PLL.h"
-#include "fixed.h"
 #include "tm4c123gh6pm.h"
 #include "ADCCode.h"
 #include "UART.h"

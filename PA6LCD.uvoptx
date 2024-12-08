@@ -223,30 +223,6 @@
       <GroupNumber>1</GroupNumber>
       <FileNumber>3</FileNumber>
       <FileType>1</FileType>
-      <tvExp>1</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>.\ST7735.c</PathWithFileName>
-      <FilenameWithoutPath>ST7735.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>1</GroupNumber>
-      <FileNumber>4</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>.\fixed.c</PathWithFileName>
-      <FilenameWithoutPath>fixed.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>1</GroupNumber>
-      <FileNumber>5</FileNumber>
-      <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
@@ -257,7 +233,7 @@
     </File>
     <File>
       <GroupNumber>1</GroupNumber>
-      <FileNumber>6</FileNumber>
+      <FileNumber>4</FileNumber>
       <FileType>1</FileType>
       <tvExp>1</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -269,9 +245,9 @@
     </File>
     <File>
       <GroupNumber>1</GroupNumber>
-      <FileNumber>7</FileNumber>
+      <FileNumber>5</FileNumber>
       <FileType>1</FileType>
-      <tvExp>1</tvExp>
+      <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>.\HC05.c</PathWithFileName>
@@ -281,25 +257,25 @@
     </File>
     <File>
       <GroupNumber>1</GroupNumber>
-      <FileNumber>8</FileNumber>
+      <FileNumber>6</FileNumber>
       <FileType>1</FileType>
       <tvExp>1</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\UART.c</PathWithFileName>
-      <FilenameWithoutPath>UART.c</FilenameWithoutPath>
+      <PathWithFileName>.\LED.c</PathWithFileName>
+      <FilenameWithoutPath>LED.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
     <File>
       <GroupNumber>1</GroupNumber>
-      <FileNumber>9</FileNumber>
+      <FileNumber>7</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\LED.c</PathWithFileName>
-      <FilenameWithoutPath>LED.c</FilenameWithoutPath>
+      <PathWithFileName>.\UART.c</PathWithFileName>
+      <FilenameWithoutPath>UART.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

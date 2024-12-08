@@ -357,10 +357,10 @@ char character;
 
 
 // this is used for printf to output to the usb uart
-//int fputc(int ch, FILE *f){
-//  UART_OutChar(ch);
-//  return 1;
-//}
+int fputc(int ch, FILE *f){
+  UART_OutChar(ch);
+  return 1;
+}
 //------------Output_Init------------
 // Initialize the UART0 for 115,200 baud rate (assuming 80 MHz bus clock),
 // 8 bit word length, no parity bits, one stop bit, FIFOs enabled
