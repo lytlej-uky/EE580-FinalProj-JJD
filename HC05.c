@@ -247,10 +247,7 @@ void HC05config(uint32_t mode){
 			if(SearchFound == 0) {
 				printf("Can't set Inquiry mode"); while(1){};
 			}
-			ATsend("AT+INQ\r\n"); // inquire
-			if(SearchFound == 0) {
-				printf("Can't inquiry devices"); while(1){};
-			}
+			
 			
 
 			ATsend("AT+ROLE?\r\n");
@@ -269,7 +266,15 @@ void HC05config(uint32_t mode){
 			if(SearchFound == 0) {
 					printf("UART mode"); while(1){};
 			}
+			ATsend("AT+INQM?\r\n"); //	configure inquiry mode
+			if(SearchFound == 0) {
+				printf("Can't get Inquiry mode"); while(1){};
+			}
 			
+			ATsend("AT+INQ\r\n"); // inquire
+			if(SearchFound == 0) {
+				printf("Can't inquiry devices"); while(1){};
+			}
   }
 	
 
