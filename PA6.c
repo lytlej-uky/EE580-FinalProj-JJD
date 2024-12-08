@@ -177,16 +177,16 @@ int main(void ) {
 	DisableInterrupts();
   PLL_Init(Bus80MHz);
   Output_Init_UART();       // UART0 only used for debugging
-  printf("\n\r-----------\n\rSlave...\n\r");
+  UART_OutString("\n\r-----------\n\rSlave...\n\r");
 	HC05_Init(38400);
 	//bluetooth
 	{ 
-		printf("disconnect HC05 Vcc pin, connect it again, and press SW1/SW2 to enter AT mode \r\n");//"press HC-05 button while powering up to enter AT mode \r\n");
+		UART_OutString("disconnect HC05 Vcc pin, connect it again, and press SW1/SW2 to enter AT mode \r\n");//"press HC-05 button while powering up to enter AT mode \r\n");
 		GPIO_PORTB_DATA_R |= 0x20; // EN high
 		while(Board_Input()==0){};
 		HC05config_slave(0);//, slaveaddress);
 		//HC05config_master(0);
-		printf("HC05 is configured. Disconnect HC05 Vcc pin, connect it again to exit AT mode, if not paired pair it with computer and then press SW1/SW2  \r\n");
+		UART_OutString("HC05 is configured. Disconnect HC05 Vcc pin, connect it again to exit AT mode, if not paired pair it with computer and then press SW1/SW2  \r\n");
 		GPIO_PORTB_DATA_R &= ~0x20; // EN low
 		DelayMs(150);
 		while(Board_Input()==0){};
