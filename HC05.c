@@ -8,6 +8,7 @@
 #include "tm4c123gh6pm.h"
 #include "Bluetooth.h"
 #include "UART.h"
+#include "LED.h"
 
 #define BUFFER_SIZE 1024
 // prototypes for functions defined in startup.s
@@ -215,10 +216,16 @@ void HC05config(uint32_t mode){
 			printf("Can't enter AT mode"); while(1){};
 			}
 		
-			ATsend("AT+NAME=HC-05-MASTER\r\n");  // ATsend("AT+NAME=????\r\n"); set a name. TODOpart1
+			ATsend("AT+ORGL\r\n");  
 			if(SearchFound == 0) {
-					printf("Can't rename slave module"); while(1){};
+					printf("org settings"); while(1){};
 			}
+			ATsend("AT+VERSION?\r\n");  
+			if(SearchFound == 0) {
+					printf("v"); while(1){};
+			}
+			
+
 			ATsend("AT+PSWD=4321\r\n");// ATsend("AT+PSWD=???\r\n");    set a pasword. TODOpart1
 			if(SearchFound == 0) {
 					printf("Can't change password of slave module"); while(1){};
@@ -231,51 +238,97 @@ void HC05config(uint32_t mode){
 			if(SearchFound == 0) {
 				printf("Can't enter set Master mode"); while(1){};
 			}
-			ATsend("AT+INIT\r\n");
+			ATsend("AT+CMODE=0\r\n");
 			if (SearchFound == 0) {
 					printf("Can't initialize module"); while(1){}
 			}
-			ATsend("AT+IAC=9e8b33\r\n");
+			ATsend("AT+INQM=0,5,9\r\n");
 			if (SearchFound == 0) {
-					printf("Failed to reset module");
+					printf("Can't set inquire mode"); while(1){}
 			}
-			ATsend("AT+CLASS=0\r\n");
+			ATsend("AT+STATE?\r\n");
 			if (SearchFound == 0) {
-					printf("Failed to reset module");
+					printf("Can't get state"); while(1){}
 			}
-			ATsend("AT+INQM=1,9,48\r\n"); //	configure inquiry mode
-			if(SearchFound == 0) {
-				printf("Can't set Inquiry mode"); while(1){};
+//			ATsend("AT+INIT\r\n");
+//			if (SearchFound == 0) {
+//					printf("Can't initialize module"); while(1){}
+//			}
+			ATsend("AT+INQ\r\n");
+			if (SearchFound == 0) {
+					printf("Can't inquire"); while(1){}
 			}
-			
 			
 
-			ATsend("AT+ROLE?\r\n");
-			if(SearchFound == 0) {
-					printf("Can't get module role"); while(1){};
-			}
-			ATsend("AT+NAME?\r\n");
-			if(SearchFound == 0) {
-					printf("Can't get module name"); while(1){};
-			}
-			ATsend("AT+PSWD?\r\n");
-			if(SearchFound == 0) {
-					printf("Can't rename slave module"); while(1){};
-			}
-			ATsend("AT+UART?\r\n");
-			if(SearchFound == 0) {
-					printf("UART mode"); while(1){};
-			}
-			ATsend("AT+INQM?\r\n"); //	configure inquiry mode
-			if(SearchFound == 0) {
-				printf("Can't get Inquiry mode"); while(1){};
-			}
-			
-			ATsend("AT+INQ\r\n"); // inquire
-			if(SearchFound == 0) {
-				printf("Can't inquiry devices"); while(1){};
-			}
+//			ATsend("AT+ROLE?\r\n");
+//			if(SearchFound == 0) {
+//					printf("Can't get module role"); while(1){};
+//			}
+//			ATsend("AT+NAME?\r\n");
+//			if(SearchFound == 0) {
+//					printf("Can't get module name"); while(1){};
+//			}
+//			ATsend("AT+PSWD?\r\n");
+//			if(SearchFound == 0) {
+//					printf("Can't rename slave module"); while(1){};
+//			}
+//			ATsend("AT+UART?\r\n");
+//			if(SearchFound == 0) {
+//					printf("UART mode"); while(1){};
+//			}
+//			ATsend("AT+INQM?\r\n"); //	configure inquiry mode
+//			if(SearchFound == 0) {
+//				printf("Can't get Inquiry mode"); while(1){};
+//			}
+//			ATsend("AT+STATE?\r\n"); 
+//			if(SearchFound == 0) {
+//				printf("Can't get state"); while(1){};
+//			}
+//			ATsend("AT+INQ\r\n");
+//			if (SearchFound == 0) {
+//					printf("Can't inquire"); while(1){}
+//			}
+//			ATsend("AT+RNAME?98D3,02,96AF3B\r\n"); // bind
+//			if(SearchFound == 0) {
+//				printf("Can't find"); while(1){};
+//			}
+//			
+//			ATsend("AT+FSAD=98D3,02,96AF3B\r\n"); // pair
+//			if(SearchFound == 0) {
+//				printf("SAD"); while(1){};
+//			}
+//			ATsend("AT+PAIR=98D3,02,96AF3B,20\r\n"); // pair
+//			if(SearchFound == 0) {
+//				printf("Can't pair devices"); while(1){};
+//			}
+//			ATsend("AT+BIND=98D3,02,96AF3B\r\n"); // bind
+//			if(SearchFound == 0) {
+//				printf("Can't bind devices"); while(1){};
+//			}
+//			ATsend("AT+STATE?\r\n");
+//			if (SearchFound == 0) {
+//					printf("Can't get state"); while(1){}
+//			}
+//			ATsend("AT+LINK=98D3,02,96AF3B\r\n"); // link
+//			if(SearchFound == 0) {
+//				printf("Can't link devices"); while(1){};
+//			}
   }
+
+void HC05_Pair(void){
+			ATsend("AT\r\n"); //  ATsend("AT\r\n"); check if hc05 is in AT mode. TODOpart1
+			if(SearchFound == 0) {
+				printf("Can't enter AT mode"); while(1){};
+			}
+			ATsend("AT+STATE?\r\n");
+			if (SearchFound == 0) {
+					printf("Can't get state"); while(1){}
+			}
+			ATsend("AT+INQ\r\n");
+			if (SearchFound == 0) {
+					printf("Can't inquire"); while(1){}
+			}
+}
 	
 
 

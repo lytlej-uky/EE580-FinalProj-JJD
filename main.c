@@ -53,6 +53,7 @@ int main(void){
 		HC05config(mode);//, slaveaddress);
 		printf("HC05 is configured. Disconnect HC05 Vcc pin, connect it again to exit AT mode, if not paired pair it with computer and then press SW1/SW2  \r\n");
 		GPIO_PORTB_DATA_R &= ~0x20; // EN low
+		DelayMs(150);
 		while(Board_Input()==0){};
 	} else {
 		printf("If HC05 is in AT mode, Disconnect HC05 Vcc pin, connect it again to exit AT mode; otherwise wait a few seconds if not paired pair it with computer and press SW1/SW2   \r\n");
@@ -70,10 +71,8 @@ int main(void){
 		 // use DelayMs() to add 150ms delay to avoid sending too many 1s or 0s to the bluetooth module.
 		 // in your gui.py code send a 'b' or 'B' to the COM port of bluetooth module. Here, if a 'B' is received in 
 		 //	UART1 turn on blue LED, If a 'b' is received in UART1 turn off blue LED, and typing other letters toggles the red LED.
-			
-		 char data;
-		 
-		 
+
+//	
 		 
 			 uint8_t sw = Board_Input();
 			 if (sw == 0x02) {  // SW1 pressed 
@@ -84,17 +83,6 @@ int main(void){
 			 }
 		 
 		 DelayMs(150); 
-			 
-		 if ((UART1_FR_R & UART_FR_RXFE) == 0) {
-			 data = (char)(UART1_DR_R);
-		 }
-		 if(data == 'B'){
-				 LED_Blueon();
-				 LED_RedOff();
-		 } else if(data == 'b'){
-				 LED_Blueoff();
-				 LED_RedOff();
-		 } 
   }
 }
 
